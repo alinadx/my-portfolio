@@ -1,11 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="projects">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
+    <meta name="description" data-i18n-content="descriptionProjects" content="Explore Alina Didenko’s web and UX/UI design, graphic design, artwork, and frontend development projects.">
+    <title data-i18n="titleProjects">My Projects — Alina Didenko</title>
+    <link rel="icon" href="Assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#ffffff">
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="translations.js" defer></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
-    
+    <a class="skip-link" href="#main-content" data-i18n="skip">Skip to content</a>
+
+    <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation" data-i18n-aria-label="nav">
+            <a class="home-link" href="index.html" aria-label="Home" data-i18n-aria-label="home"><img src="Assets/favicon.svg" alt="" width="32" height="32"></a>
+            <a class="projects-link" href="my-projects.html" aria-current="page" data-i18n="projects">My Projects</a>
+            <span class="language-label" lang="en"><abbr title="English">EN</abbr></span>
+            <label class="language-control" hidden>
+                <span class="visually-hidden" data-i18n="language">Choose language</span>
+                <select name="language" data-language aria-label="Choose language" data-i18n-aria-label="language">
+                    <option value="en" lang="en" aria-label="English">EN</option><option value="de" lang="de" aria-label="Deutsch">DE</option><option value="uk" lang="uk" aria-label="Українська">UK</option><option value="ru" lang="ru" aria-label="Русский">RU</option>
+                </select>
+                <svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 8 9 9 9-9" fill="none" stroke="currentColor" stroke-width="2"/></svg><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20M4 6h16M4 18h16"/></g></svg>
+            </label>
+        </nav>
+    </header>
+
+    <main id="main-content" class="projects-page" tabindex="-1">
+        <h1 class="visually-hidden" data-i18n="projects">My Projects</h1>
+
+        <section class="project-category" aria-labelledby="web-title">
+            <h2 id="web-title"><span class="category-number" aria-hidden="true">01</span> <span data-i18n="webCategory">Web &amp; UX/UI Design</span></h2>
+            <!-- Lists retain a sensible reading order when made horizontally scrollable. -->
+            <ul class="project-row" tabindex="0" aria-label="Project collection. Use the arrow keys to explore." data-i18n-aria-label="scrollProjects">
+                <li>
+                    <article class="project-card" aria-labelledby="cafe-title">
+                        <img class="project-image" src="Assets/images/cafe-kiebitz.jpg" alt="Café Kiebitz website and menu concept, showing desktop and mobile layouts with bird illustrations" data-i18n-alt="altCafe" width="364" height="222" decoding="async">
+                        <h3 id="cafe-title" data-i18n="cafeTitle">Café Kiebitz — Illustrated Web &amp; Menu Design</h3>
+                        <p data-i18n="cafeDescription">A UX/UI project featuring a responsive café website and a thoughtfully designed menu focused on clarity, usability, and visual consistency.</p>
+                        <p class="pending-content" data-i18n="casePending">Behance case study link coming soon.</p>
+                    </article>
+                </li>
+                <li>
+                    <article class="project-card" aria-labelledby="sweet-title">
+                        <img class="project-image" src="Assets/images/sweet-taste.jpg" alt="SWEET TASTE confectionery landing page with a pink cake, chocolate pieces, and burgundy accents" data-i18n-alt="altSweet" width="364" height="222" loading="lazy" decoding="async">
+                        <h3 id="sweet-title" data-i18n="sweetTitle">SWEET TASTE — Landing Page</h3>
+                        <p data-i18n="sweetDescription">A web design concept for a confectionery brand, created to showcase handmade cakes through an elegant layout, smooth navigation, and a warm visual atmosphere.</p>
+                        <p class="pending-content" data-i18n="casePending">Behance case study link coming soon.</p>
+                    </article>
+                </li>
+                <li>
+                    <article class="project-card" aria-labelledby="dog-title">
+                        <img class="project-image" src="Assets/images/dog-walking.jpg" alt="Dog walking website concept with a dachshund photograph and a simple booking-focused layout" data-i18n-alt="altDog" width="360" height="220" loading="lazy" decoding="async">
+                        <h3 id="dog-title" data-i18n="dogTitle">DOG WALKING — Landing Page</h3>
+                        <p data-i18n="dogDescription">A landing page concept for a dog walking company, designed to introduce the service through friendly visuals, clear information, and an easy booking experience.</p>
+                        <p class="pending-content" data-i18n="casePending">Behance case study link coming soon.</p>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section class="project-category" aria-labelledby="graphic-title">
+            <h2 id="graphic-title"><span class="category-number" aria-hidden="true">02</span> <span data-i18n="graphicCategory">Graphic Design</span></h2>
+            <ul class="project-row" tabindex="0" aria-label="Project collection. Use the arrow keys to explore." data-i18n-aria-label="scrollProjects">
+                <li>
+                    <article class="project-card" aria-labelledby="catalog-title">
+                        <img class="project-image" src="Assets/images/sale-catalog.jpg" alt="Sale catalog cover concept combining bold red typography with a black-and-white fashion photograph" data-i18n-alt="altCatalog" width="364" height="222" loading="lazy" decoding="async">
+                        <h3 id="catalog-title" data-i18n="catalogTitle">SALE CATALOG — Cover Concepts</h3>
+                        <p data-i18n="catalogDescription">A series of sale catalog cover concepts, created to highlight seasonal offers through bold typography, clear hierarchy, and eye-catching visual compositions.</p>
+                        <p class="pending-content" data-i18n="casePending">Behance case study link coming soon.</p>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section class="project-category" aria-labelledby="art-title">
+            <h2 id="art-title"><span class="category-number" aria-hidden="true">03</span> <span data-i18n="artCategory">Art &amp; Illustration</span></h2>
+            <!-- Keep the four wireframe slots without inventing artwork or metadata. -->
+            <ul class="project-row artwork-row" tabindex="0" aria-label="Project collection. Use the arrow keys to explore." data-i18n-aria-label="scrollProjects">
+                <li>
+                    <article class="artwork-card" aria-labelledby="artwork-one-title">
+                        <div class="artwork-placeholder"><p data-i18n="artworkPending">Artwork image coming soon.</p></div>
+                        <h3 id="artwork-one-title" data-i18n="artwork1">Artwork 01</h3>
+                        <p class="pending-content" data-i18n="artworkDetails">Title, medium, dimensions, and year to be added.</p>
+                    </article>
+                </li>
+                <li>
+                    <article class="artwork-card" aria-labelledby="artwork-two-title">
+                        <div class="artwork-placeholder"><p data-i18n="artworkPending">Artwork image coming soon.</p></div>
+                        <h3 id="artwork-two-title" data-i18n="artwork2">Artwork 02</h3>
+                        <p class="pending-content" data-i18n="artworkDetails">Title, medium, dimensions, and year to be added.</p>
+                    </article>
+                </li>
+                <li>
+                    <article class="artwork-card" aria-labelledby="artwork-three-title">
+                        <div class="artwork-placeholder"><p data-i18n="artworkPending">Artwork image coming soon.</p></div>
+                        <h3 id="artwork-three-title" data-i18n="artwork3">Artwork 03</h3>
+                        <p class="pending-content" data-i18n="artworkDetails">Title, medium, dimensions, and year to be added.</p>
+                    </article>
+                </li>
+                <li>
+                    <article class="artwork-card" aria-labelledby="artwork-four-title">
+                        <div class="artwork-placeholder"><p data-i18n="artworkPending">Artwork image coming soon.</p></div>
+                        <h3 id="artwork-four-title" data-i18n="artwork4">Artwork 04</h3>
+                        <p class="pending-content" data-i18n="artworkDetails">Title, medium, dimensions, and year to be added.</p>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        <section class="project-category" aria-labelledby="code-title">
+            <h2 id="code-title"><span class="category-number" aria-hidden="true">04</span> <span data-i18n="codeCategory">Code &amp; Development</span></h2>
+            <article class="project-card code-card" aria-labelledby="portfolio-title"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.11 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.58 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+                <h3 id="portfolio-title" data-i18n="portfolio">My Portfolio</h3>
+                <p data-i18n="portfolioDescription">A responsive portfolio built from my own Figma designs with semantic HTML, CSS, and JavaScript. Includes light/dark themes, four languages, and accessible motion.</p>
+                <p class="project-technologies">HTML · CSS · JavaScript</p>
+                <a href="https://github.com/alinadx/my-portfolio" data-i18n="source">View portfolio source on GitHub</a>
+            </article>
+        </section>
+    </main>
+
+    <div class="page-theme" data-page-theme hidden><button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme" data-i18n-aria-label="theme" data-theme-toggle hidden><span class="theme-thumb"><svg class="icon sun-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></g></svg><svg class="icon moon-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 13A8.6 8.6 0 0 1 11 3.5 8.6 8.6 0 1 0 20.5 13Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button></div>
+
+    <footer class="site-footer">
+        <p>© <span data-current-year>2026</span> Alina Didenko</p>
+        <nav aria-label="Legal information" data-i18n-aria-label="legalNav">
+            <a href="legal.html#legal-notice" data-i18n="legalNotice">Legal Notice</a>
+            <a href="legal.html#privacy-policy" data-i18n="privacy">Privacy Policy</a>
+        </nav>
+        <ul class="social-links" aria-label="Social profiles" data-i18n-aria-label="socialNav">
+            <li><span class="pending-profile">Behance<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
+            <li><a href="https://github.com/alinadx">GitHub</a></li>
+            <li><span class="pending-profile">LinkedIn<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
+        </ul>
+    </footer>
 </body>
 </html>

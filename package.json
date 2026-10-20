@@ -1,0 +1,9 @@
+{
+  "name": "alina-didenko-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A buildless, accessible design and frontend portfolio.",
+  "scripts": {
+    "dev": "python3 -m http.server 8000 --bind 127.0.0.1"
+  }
+}

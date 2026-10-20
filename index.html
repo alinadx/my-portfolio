@@ -1,37 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="home">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <meta name="description" data-i18n-content="descriptionHome" content="Meet Alina Didenko, a media designer working across UX/UI, web, branding, and print while developing her frontend skills.">
+    <title data-i18n="titleHome">Alina Didenko — Design &amp; Frontend Portfolio</title>
+    <link rel="icon" href="Assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#ffffff">
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="translations.js" defer></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <nav>
-        <div class="myProjects">
-            <a href="my-projects.html">
-            <img src="assets/my-projects-icon">
-            My Projects
-        </a>
-        </div>
-        <div class="language-selector">
-            <img src="selector-icon">
-            EN
-            <img src="assets/globe-icon">
-        </div>
-    </nav>
-    <main>
-        <section>
-            <article>
-            <h1>Alina Didenko</h1>
-            <h3></h3>
-        <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>
-        <hr>
-        <span id="time"></span>
-            </article>
+    <a class="skip-link" href="#main-content" data-i18n="skip">Skip to content</a>
+
+    <!-- Shared navigation: real links work before styling or JavaScript. -->
+    <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation" data-i18n-aria-label="nav">
+            <a class="home-link" href="index.html" aria-label="Home" data-i18n-aria-label="home" aria-current="page"><img src="Assets/favicon.svg" alt="" width="32" height="32"></a>
+            <a class="projects-link" href="my-projects.html" data-i18n="projects">My Projects</a>
+            <span class="language-label" lang="en"><abbr title="English">EN</abbr></span>
+            <label class="language-control" hidden>
+                <span class="visually-hidden" data-i18n="language">Choose language</span>
+                <select name="language" data-language aria-label="Choose language" data-i18n-aria-label="language">
+                    <option value="en" lang="en" aria-label="English">EN</option><option value="de" lang="de" aria-label="Deutsch">DE</option><option value="uk" lang="uk" aria-label="Українська">UK</option><option value="ru" lang="ru" aria-label="Русский">RU</option>
+                </select>
+                <svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 8 9 9 9-9" fill="none" stroke="currentColor" stroke-width="2"/></svg><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20M4 6h16M4 18h16"/></g></svg>
+            </label>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <section class="profile" aria-labelledby="profile-title">
+            <img class="profile-photo" src="Assets/images/portrait.jpg" alt="Portrait of Alina Didenko" data-i18n-alt="altPortrait" width="92" height="92" fetchpriority="high">
+            <h1 id="profile-title" data-i18n="fullName">Alina Didenko</h1>
+            <p class="profile-role" data-i18n="role">Media Designer (Digital &amp; Print) Apprentice at imageLAND</p>
+            <a class="profile-email" href="mailto:alinaxdidenko@gmail.com">alinaxdidenko@gmail.com</a>
+            <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme" data-i18n-aria-label="theme" data-theme-toggle hidden><span class="theme-thumb"><svg class="icon sun-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></g></svg><svg class="icon moon-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 13A8.6 8.6 0 0 1 11 3.5 8.6 8.6 0 1 0 20.5 13Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button>
+        </section>
+
+        <!-- Each question names a section. Replies stay readable without scripts. -->
+        <section class="conversation" aria-labelledby="conversation-title">
+            <h2 id="conversation-title" class="visually-hidden" data-i18n="conversation">A conversation with Alina</h2>
+            <div class="conversation-toolbar">
+                <p class="conversation-date"><time datetime="2026-10-19" data-current-time>19 Oct 2026</time></p>
+                <button class="show-all" type="button" data-show-all data-i18n="showAll" hidden>Show all</button>
+            </div>
+
+            <section class="exchange" aria-labelledby="question-introduction">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-introduction" data-i18n="introQuestion">Hi! Your work caught my eye, and I’d love to learn more about what you do.</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="greeting">Hi 👋 I’m Alina.</p>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="introduction">I’m a multidisciplinary designer working across UX/UI, web, branding, and print design. I enjoy combining strong visuals with clear, practical solutions.</p>
+                        <p data-i18n="technicalInterest">I’m also interested in the technical side of how digital products are built.</p>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="spokenLanguages">I’m comfortable communicating in Ukrainian, Russian, English, and German.</p>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-projects">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-projects" data-i18n="projectsQuestion">What kind of projects do you work on?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="webWork">I design websites, mobile interfaces, and other UX/UI projects, and I can build responsive websites in Framer.</p>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="graphicWork">I also work on branding, logos, packaging, brochures, catalogs, illustrations, and other visual materials.</p>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="learning">I’m also developing my technical skills in frontend development with HTML, CSS, JavaScript, and Angular, while exploring the basics of backend development.</p>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-work">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-work" data-i18n="workQuestion">Can I see your work?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <article class="message message--incoming project-card" aria-labelledby="featured-cafe-title">
+                        <img class="project-image" src="Assets/images/cafe-kiebitz.jpg" alt="Café Kiebitz website and menu concept, showing desktop and mobile layouts with bird illustrations" data-i18n-alt="altCafe" width="328" height="200" loading="lazy" decoding="async">
+                        <h4 id="featured-cafe-title" data-i18n="cafeTitle">Café Kiebitz — Illustrated Web &amp; Menu Design</h4>
+                        <p data-i18n="cafeDescription">A UX/UI project featuring a responsive café website and a thoughtfully designed menu focused on clarity, usability, and visual consistency.</p>
+                        <p class="pending-content" data-i18n="casePending">Behance case study link coming soon.</p>
+                    </article>
+                    <article class="message message--incoming project-card" aria-labelledby="featured-sweet-title">
+                        <img class="project-image" src="Assets/images/sweet-taste.jpg" alt="SWEET TASTE confectionery landing page with a pink cake, chocolate pieces, and burgundy accents" data-i18n-alt="altSweet" width="328" height="200" loading="lazy" decoding="async">
+                        <h4 id="featured-sweet-title" data-i18n="sweetTitle">SWEET TASTE — Landing Page</h4>
+                        <p data-i18n="sweetDescription">A web design concept for a confectionery brand, created to showcase handmade cakes through an elegant layout, smooth navigation, and a warm visual atmosphere.</p>
+                        <p class="pending-content" data-i18n="casePending">Behance case study link coming soon.</p>
+                    </article>
+                    <div class="message message--incoming">
+                        <p data-i18n="examples">These are just a few selected examples.</p>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="behanceWork">You can find more of my design projects and full case studies on Behance.</p>
+                        <p class="pending-content" data-i18n="behancePending">Behance profile link coming soon.</p>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="githubWork">I also share some of my coding work on GitHub, if you’d like to see the technical side of what I’m learning and building.</p>
+                        <a href="https://github.com/alinadx" data-i18n="viewGithub">View on GitHub</a>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="moreProjects">And if you want to see a broader mix of my work, check out My Projects.</p>
+                        <p data-i18n="illustrationWork">It also includes illustrations and some of my personal artwork.</p>
+                        <a href="my-projects.html" data-i18n="projects">My Projects</a>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-tools">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-tools" data-i18n="toolsQuestion">What tools do you work with?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="toolsIntro">Here are some of the tools and technologies I work with:</p>
+                    </div>
+                    <div class="message message--incoming tools-card">
+                        <dl class="tools-list">
+                            <div class="tool"><dt>Adobe Creative Cloud</dt><dd><span class="visually-hidden">Photoshop, Lightroom, InDesign, Illustrator</span><div class="adobe-icons" aria-hidden="true"><span class="adobe-icon">Ps</span><span class="adobe-icon">Lr</span><span class="adobe-icon id">Id</span><span class="adobe-icon ai">Ai</span></div></dd></div>
+                            <div class="tool"><dt>VS Code</dt><dd><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#23a9f2" d="m17 2 6 3v14l-6 3L7 14l-4 3-3-2 5-5L0 6l3-2 4 3 10-5Zm0 5-7 5 7 5V7Z"/></svg><p class="tool-description visually-hidden" data-i18n="editor">Code editor</p></dd></div>
+                            <div class="tool"><dt>Angular</dt><dd><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#e500a4" d="m12 1 11 4-2 14-9 4-9-4L1 5Z"/><path fill="#fff" d="m12 5-7 14h3l1.5-3h5l1.5 3h3L12 5Zm0 5 1.5 3h-3Z"/></svg><p class="tool-description visually-hidden" data-i18n="frontendLearning">Frontend development — learning</p></dd></div>
+                            <div class="tool"><dt>Figma</dt><dd><svg class="brand-icon" viewBox="0 0 20 24" aria-hidden="true" focusable="false"><path fill="#f24e1e" d="M4 0h8v8H4a4 4 0 0 1 0-8"/><path fill="#ff7262" d="M12 0h4a4 4 0 0 1 0 8h-4"/><path fill="#a259ff" d="M4 8h8v8H4a4 4 0 0 1 0-8"/><circle cx="16" cy="12" r="4" fill="#1abcfe"/><path fill="#0acf83" d="M4 16h8v4a4 4 0 1 1-8-4"/></svg><p class="tool-description visually-hidden" data-i18n="interfaceDesign">Interface design and prototyping</p></dd></div>
+                            <div class="tool"><dt>Framer</dt><dd><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="24" height="24" rx="4" fill="#080808"/><path fill="#fff" d="M6 5h12v6h-6L6 5Zm0 6h6l6 6h-6v5l-6-6v-5Z"/></svg><p class="tool-description visually-hidden" data-i18n="responsiveDesign">Responsive website design</p></dd></div>
+                        </dl>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-experience">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-experience" data-i18n="experienceQuestion">What’s your professional and educational background?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="experienceIntro">Here’s a quick overview of my experience and education:</p>
+                    </div>
+                    <div class="message message--incoming experience-card">
+                        <!-- Native disclosure controls already support mouse and keyboard. -->
+                        <details open>
+                            <summary data-i18n="mediaDesigner">Media Designer Digital &amp; Print</summary>
+                            <p class="experience-meta" data-i18n="apprenticeship">Apprentice · imageLAND</p>
+                            <p class="experience-dates"><time datetime="2025-08">Aug 2025</time> — <span data-i18n="present">Present</span></p>
+                            <p data-i18n="apprenticeshipDescription">I work across digital and print projects, building practical skills in visual communication, layout, and production.</p>
+                        </details>
+                        <details open>
+                            <summary data-i18n="degree">B.A. in Journalism, Media Studies &amp; Communication</summary>
+                            <p class="experience-meta" data-i18n="university">Study · Dnipro National University</p>
+                            <p class="experience-dates"><time datetime="2019-09">Sep 2019</time> — <time datetime="2023-06">Jun 2023</time></p>
+                            <p data-i18n="degreeDescription">My studies gave me a strong foundation in communication, storytelling, media analysis, research, and content development.</p>
+                        </details>
+                        <details open>
+                            <summary data-i18n="webDesigner">Web Designer</summary>
+                            <p class="experience-meta" data-i18n="agency">Work · Abz.agency</p>
+                            <p class="experience-dates"><time datetime="2022-03">Mar 2022</time> — <time datetime="2022-07">Jul 2022</time></p>
+                            <p data-i18n="agencyDescription">I worked as a designer on different projects, such as landing pages, websites, and mobile interfaces.</p>
+                        </details>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-process">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-process" data-i18n="processQuestion">How do you usually work?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="processDiscover">First, I learn about your project, goals, audience, timeline, and requirements.</p>
+                        <p data-i18n="processExplore">Then I research, define the direction, and create the first concepts or prototype.</p>
+                        <p data-i18n="processRefine">We review the work together, refine the design based on your feedback, and prepare the final solution.</p>
+                        <p data-i18n="processUpdates">I keep the process clear with regular updates, so you always know what stage we’re at.</p>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-personal">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-personal" data-i18n="personalQuestion">Tell me a little more about yourself.</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="enjoyment">Design is not only my profession — it’s also something I genuinely enjoy!</p>
+                        <img class="personal-image" src="Assets/images/creative-cat.jpg" alt="A playful illustration of a white cat wearing pink headphones and sunglasses while using a glittery laptop" data-i18n-alt="altCat" width="328" height="267" loading="lazy" decoding="async">
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="hobbies">I also love drawing and traveling.</p>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-values">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-values" data-i18n="valuesQuestion">I want to make sure I choose the right person for the project. What matters most to you when you work on something?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="values">For me, it starts with understanding the goal, the audience, and the problem we’re trying to solve. I care about creating work that is clear, thoughtful, visually strong, and functional — whether I’m designing, illustrating, or building something digital.</p>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <section class="exchange" aria-labelledby="question-contact">
+                <div class="message message--outgoing">
+                    <p class="message-sender" data-i18n="you">You</p>
+                    <h3 id="question-contact" data-i18n="contactQuestion">I like what I’ve seen. How can I get in touch?</h3>
+                </div>
+                <div class="reply-group">
+                    <p class="message-sender" data-i18n="name">Alina</p>
+                    <div class="message message--incoming">
+                        <p data-i18n="findMe">You can find me here:</p>
+                    </div>
+                    <div class="message message--incoming contact-card">
+                        <ul class="contact-list">
+                            <li><a href="mailto:alinaxdidenko@gmail.com" data-i18n="email">Send me an email</a></li>
+                            <li data-i18n="linkedinPending">LinkedIn profile link coming soon.ile link coming soon.</span></li>
+                            <li data-i18n="resumePending">Resume coming soon.Resume coming soon.</span></li>
+                        </ul>
+                    </div>
+                    <div class="message message--incoming">
+                        <p data-i18n="contactInvite">Feel free to get in touch if you’d like to talk about a job opportunity, collaboration, or project.</p>
+                        <p data-i18n="connect">I’d be happy to connect!</p>
+                    </div>
+                    <img class="message-avatar" src="Assets/images/avatar.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+                </div>
+            </section>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <p>© <span data-current-year>2026</span> Alina Didenko</p>
+        <nav aria-label="Legal information" data-i18n-aria-label="legalNav">
+            <a href="legal.html#legal-notice" data-i18n="legalNotice">Legal Notice</a>
+            <a href="legal.html#privacy-policy" data-i18n="privacy">Privacy Policy</a>
+        </nav>
+        <ul class="social-links" aria-label="Social profiles" data-i18n-aria-label="socialNav">
+            <li><span class="pending-profile">Behance<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
+            <li><a href="https://github.com/alinadx">GitHub</a></li>
+            <li><span class="pending-profile">LinkedIn<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
+        </ul>
+    </footer>
 </body>
 </html>
