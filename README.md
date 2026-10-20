@@ -23,7 +23,7 @@ Use an HTTP preview when reviewing saved preferences: browsers can apply differe
 - English, German, Ukrainian, and Russian throughout the content, controls, image descriptions, page titles, and metadata.
 - Native expandable experience sections and keyboard-scrollable project rows.
 - Live visitor-local date/time and copyright year.
-- Optimized images, local SVG icons, favicon, skip navigation, and focus styles.
+- Optimized images, SVG icons, favicon, skip navigation, and focus styles.
 - English content and a system theme remain available without JavaScript.
 
 ## Source layout
@@ -38,7 +38,6 @@ Use an HTTP preview when reviewing saved preferences: browsers can apply differe
 | `translations.js` | Shared translation dictionary |
 | `app.js` | Preferences, translations, date formatting, scrolling, and message playback |
 | `Assets/` | Optimized images, favicon, and existing source icons |
-| `Wireframe/` | Preserved SVG design references |
 | `docs/implementation.md` | Section-by-section explanation of the code |
 
 ## Content still needed

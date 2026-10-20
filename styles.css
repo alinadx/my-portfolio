@@ -265,3 +265,13 @@ details[open] > summary::after { top: 12px; transform: rotate(225deg); }
     .project-row { display: block; overflow: visible; }
     .project-row > li { margin-bottom: 20px; }
 }
+
+.theme-thumb .moon-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.theme-thumb .sun-icon {
+    width: 16px;
+    height: 16px;
+}
