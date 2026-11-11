@@ -19,6 +19,70 @@
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+    // A shared clock keeps all nine tiles synchronized, including while settling.
+    document.querySelectorAll('.projects-brand').forEach(brand => {
+        let animations = [];
+        let elapsed = 0;
+        let previousTime;
+        let frame;
+        let stopAt = null;
+        const applyTime = () => animations.forEach(animation => {
+            animation.currentTime = elapsed;
+        });
+        const stop = () => {
+            cancelAnimationFrame(frame);
+            frame = undefined;
+            previousTime = undefined;
+        };
+        const tick = time => {
+            if (previousTime !== undefined) elapsed += time - previousTime;
+            previousTime = time;
+            if (stopAt !== null && elapsed >= stopAt) {
+                elapsed = stopAt;
+                applyTime();
+                stop();
+                return;
+            }
+            applyTime();
+            frame = requestAnimationFrame(tick);
+        };
+        const start = () => {
+            animations = Array.from(brand.querySelectorAll('.home-mark path'))
+                .flatMap(path => path.getAnimations())
+                .filter(animation => animation.animationName?.startsWith('home-tile-'));
+            if (!animations.length || reducedMotion.matches) return;
+            animations.forEach(animation => animation.pause());
+            // Skip the stationary hold on re-entry; its end has the same grid layout.
+            const step = Number(animations[0].effect.getTiming().duration) / 8;
+            const progress = elapsed % step;
+            if (progress >= step / 2) elapsed += step - progress;
+            stopAt = null;
+            applyTime();
+            if (frame === undefined) frame = requestAnimationFrame(tick);
+        };
+        const settle = () => {
+            if (!animations.length || frame === undefined) return;
+            const step = Number(animations[0].effect.getTiming().duration) / 8;
+            const progress = elapsed % step;
+            stopAt = progress < step / 2 ? elapsed - progress + step / 2 : elapsed;
+            if (stopAt === elapsed) stop();
+        };
+        brand.addEventListener('pointerenter', start);
+        brand.addEventListener('pointerleave', settle);
+        reducedMotion.addEventListener('change', () => {
+            if (reducedMotion.matches) stop();
+        });
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (stopAt !== null) {
+                    elapsed = stopAt;
+                    applyTime();
+                }
+                stop();
+            } else if (brand.matches(':hover')) start();
+        });
+    });
+
     function translate(key) {
         const values = messages[key];
         return values?.[languages.indexOf(language)] || values?.[0];
@@ -123,10 +187,16 @@
         });
     });
 
-    // 3. Reveal messages in order, without changing their reserved layout or scrolling.
+    // 3. Show typing dots for both sides as messages enter the viewport, without layout shifts.
     const conversation = document.querySelector('.conversation');
     const showAll = document.querySelector('[data-show-all]');
+    const replyAvatars = new Map(
+        Array.from(conversation?.querySelectorAll('.reply-group') || [], group =>
+            [group, group.querySelector(':scope > .message-avatar')]
+        ).filter(([, avatar]) => avatar)
+    );
     let controller;
+    let messageObserver;
     const pending = new Set();
 
     function conceal(node) {
@@ -148,12 +218,21 @@
 
     function finishConversation() {
         controller?.abort();
+        messageObserver?.disconnect();
         pending.forEach(reveal);
+        replyAvatars.forEach((avatar, group) => {
+            avatar.classList.remove('is-typing');
+            avatar.hidden = false;
+            group.append(avatar);
+        });
         conversation?.querySelectorAll('.typing-indicator').forEach(indicator => indicator.remove());
         conversation?.querySelectorAll('.is-revealed').forEach(message => message.classList.remove('is-revealed'));
         conversation?.classList.remove('is-playing');
         if (conversation) conversation.dataset.animation = 'complete';
-        // Keep the control in place so finishing doesn't shift the conversation.
+        markAllShown();
+    }
+
+    function markAllShown() {
         if (showAll) {
             showAll.disabled = true;
             showAll.setAttribute('data-i18n', 'allShown');
@@ -174,59 +253,163 @@
         });
     }
 
-    async function playConversation() {
+    function playConversation() {
         controller = new AbortController();
         const signal = controller.signal;
-        const exchanges = [...conversation.querySelectorAll('.exchange')];
+        const visible = new Set();
+        const messages = new Map();
+        let revealing = false;
+        let activeTyping;
         conversation.classList.add('is-playing');
         conversation.dataset.animation = 'playing';
-        exchanges.forEach(exchange => {
-            conceal(exchange);
-            exchange.querySelectorAll('.message--incoming, .message-avatar, .reply-group > .message-sender').forEach(conceal);
+        replyAvatars.forEach(avatar => { avatar.hidden = true; });
+        conversation.querySelectorAll('.reply-group > .message-sender').forEach(conceal);
+
+        conversation.querySelectorAll('.message--outgoing, .message--incoming').forEach(message => {
+            const slot = document.createElement('div');
+            slot.className = 'message-slot';
+            if (message.classList.contains('message--outgoing')) slot.classList.add('message-slot--outgoing');
+            message.before(slot);
+            slot.append(message);
+            messages.set(slot, message);
+            conceal(message);
         });
-        try {
-            for (const exchange of exchanges) {
-                if (signal.aborted) return;
-                reveal(exchange);
-                exchange.querySelector('.message--outgoing').classList.add('is-revealed');
-                if (!await pause(150, signal)) return;
-                const reply = exchange.querySelector('.reply-group');
-                reveal(reply.querySelector('.message-sender'));
-                const dots = document.createElement('div');
-                dots.className = 'typing-indicator';
-                dots.setAttribute('aria-hidden', 'true');
-                for (let i = 0; i < 3; i++) dots.append(document.createElement('span'));
-                reply.append(dots);
-                if (!await pause(450, signal)) return;
-                dots.remove();
-                for (const message of reply.querySelectorAll('.message--incoming')) {
-                    reveal(message);
-                    if (!await pause(150, signal)) return;
-                }
-                reveal(reply.querySelector('.message-avatar'));
-            }
-        } finally {
-            // Cancellation and unexpected errors must never leave content hidden.
-            finishConversation();
+
+        function completeIfReady() {
+            if (pending.size) return;
+            messageObserver?.disconnect();
+            conversation.dataset.animation = 'complete';
+            conversation.classList.remove('is-playing');
+            markAllShown();
         }
+
+        function revealPassed() {
+            if (signal.aborted || !pending.size) return;
+            const passed = [...messages].filter(([slot, message]) =>
+                pending.has(message) && slot.getBoundingClientRect().top < 0
+            );
+            const updatedReplies = new Set();
+            passed.forEach(([slot, message]) => {
+                if (activeTyping?.slot === slot) activeTyping.cancel();
+                slot.querySelector('.typing-indicator')?.remove();
+                reveal(message);
+                message.classList.remove('is-revealed');
+                visible.delete(slot);
+                messageObserver?.unobserve(slot);
+                const reply = message.closest('.reply-group');
+                if (reply) {
+                    reveal(reply.querySelector(':scope > .message-sender'));
+                    updatedReplies.add(reply);
+                }
+            });
+            updatedReplies.forEach(reply => {
+                const avatar = replyAvatars.get(reply);
+                if (!avatar) return;
+                // Keep the avatar beside an answer currently being typed on screen.
+                if (avatar.classList.contains('is-typing') &&
+                    avatar.parentElement.querySelector('.message.is-pending')) return;
+                avatar.hidden = false;
+                avatar.classList.remove('is-typing');
+                const lastShown = [...reply.querySelectorAll('.message--incoming:not(.is-pending)')].at(-1);
+                const destination = reply.querySelector('.message--incoming.is-pending') ? lastShown?.parentElement : reply;
+                destination?.append(avatar);
+            });
+            completeIfReady();
+        }
+
+        let scrollFrame;
+        const checkScrollPosition = () => {
+            if (scrollFrame !== undefined || signal.aborted || !pending.size) return;
+            scrollFrame = requestAnimationFrame(() => {
+                scrollFrame = undefined;
+                revealPassed();
+            });
+        };
+        window.addEventListener('scroll', checkScrollPosition, { passive: true, signal });
+        window.addEventListener('pageshow', checkScrollPosition, { signal });
+
+        async function revealVisible() {
+            if (revealing || signal.aborted) return;
+            revealing = true;
+            try {
+                while (!signal.aborted) {
+                    const next = [...messages].find(([slot, message]) => visible.has(slot) && pending.has(message));
+                    if (!next) break;
+                    const [slot, message] = next;
+                    const dots = document.createElement('div');
+                    dots.className = 'typing-indicator';
+                    dots.setAttribute('aria-hidden', 'true');
+                    for (let i = 0; i < 3; i++) dots.append(document.createElement('span'));
+                    slot.append(dots);
+                    const reply = message.closest('.reply-group');
+                    reveal(reply?.querySelector(':scope > .message-sender'));
+                    const avatar = replyAvatars.get(reply);
+                    if (avatar) {
+                        slot.append(avatar);
+                        avatar.hidden = false;
+                        avatar.classList.add('is-typing');
+                    }
+                    const typing = new AbortController();
+                    const cancelTyping = () => typing.abort();
+                    activeTyping = { slot, cancel: cancelTyping };
+                    signal.addEventListener('abort', cancelTyping, { once: true });
+                    // Replies already passed by the reader should not hold up visible ones.
+                    if (slot.getBoundingClientRect().top >= 0) await pause(900, typing.signal);
+                    signal.removeEventListener('abort', cancelTyping);
+                    activeTyping = null;
+                    dots.remove();
+                    if (signal.aborted) return;
+                    if (!pending.has(message)) continue;
+                    reveal(message);
+                    if (avatar) {
+                        avatar.classList.remove('is-typing');
+                        if (!reply.querySelector('.message--incoming.is-pending')) reply.append(avatar);
+                    }
+                    messageObserver.unobserve(slot);
+                    visible.delete(slot);
+                    if (!pending.size) {
+                        completeIfReady();
+                        break;
+                    }
+                    if (!await pause(120, signal)) return;
+                }
+            } catch {
+                finishConversation();
+            } finally {
+                revealing = false;
+            }
+        }
+
+        messageObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) visible.add(entry.target);
+                else {
+                    visible.delete(entry.target);
+                    if (activeTyping?.slot === entry.target) activeTyping.cancel();
+                }
+            });
+            revealPassed();
+            void revealVisible();
+        }, { rootMargin: '0px 0px -48px 0px', threshold: 0 });
+        messages.forEach((message, slot) => messageObserver.observe(slot));
+        revealPassed();
     }
 
     if (conversation) {
-        showAll.hidden = false;
-        showAll.addEventListener('click', finishConversation);
+        if (showAll) {
+            showAll.hidden = false;
+            showAll.addEventListener('click', finishConversation);
+        }
         reducedMotion.addEventListener('change', event => {
             if (event.matches) finishConversation();
         });
         window.addEventListener('beforeprint', finishConversation);
         window.addEventListener('pagehide', finishConversation);
         window.addEventListener('error', finishConversation, { once: true });
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) finishConversation();
-        });
-        if (reducedMotion.matches || window.location.hash) {
+        if (reducedMotion.matches || !('IntersectionObserver' in window)) {
             finishConversation();
         } else {
-            playConversation().catch(finishConversation);
+            try { playConversation(); } catch { finishConversation(); }
         }
     }
 })();
