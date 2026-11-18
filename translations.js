@@ -18,7 +18,7 @@ window.PORTFOLIO_I18N = {
     closeArtwork: ["Close", "Schließen", "Закрити", "Закрыть"],
     skip: ["Skip to content", "Zum Inhalt", "Перейти до вмісту", "Перейти к содержимому"],
     home: ["Home", "Startseite", "Головна сторінка", "Главная страница"],
-    projects: ["View Projects", "Projekte ansehen", "Переглянути проєкти", "Посмотреть проекты"],
+    projects: ["Projects", "Projekte", "Проєкти", "Проекты"],
     nav: ["Main navigation", "Hauptnavigation", "Основна навігація", "Основная навигация"],
     language: ["Choose language", "Sprache wählen", "Вибрати мову", "Выбрать язык"],
     theme: ["Dark theme", "Dunkles Design", "Темна тема", "Тёмная тема"],

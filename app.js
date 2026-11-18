@@ -108,6 +108,55 @@
         });
     }
 
+    // Shrink text-only bubbles to their longest rendered line plus padding.
+    // Always measure at the original CSS width first, so resizing can grow them back.
+    function fitMessageWidths() {
+        const bubbles = [...document.querySelectorAll('.message')].filter(message =>
+            message.classList.contains('message--outgoing') ||
+            (message.classList.contains('message--incoming') &&
+                [...message.children].every(child => child.tagName === 'P'))
+        );
+        bubbles.forEach(message => {
+            message.classList.add('message--fit-text');
+            message.style.removeProperty('width');
+        });
+        const widths = bubbles.map(message => {
+            const surface = message.classList.contains('message--outgoing')
+                ? message.querySelector('h3') : message;
+            if (!surface) return null;
+            const style = getComputedStyle(surface);
+            const scale = surface.getBoundingClientRect().width / parseFloat(style.width) || 1;
+            const paragraphs = surface === message ? [...message.children] : [surface];
+            let longest = 0;
+            for (const paragraph of paragraphs) {
+                const range = document.createRange();
+                range.selectNodeContents(paragraph);
+                const lines = new Map();
+                for (const rect of range.getClientRects()) {
+                    const key = Math.round(rect.top);
+                    const line = lines.get(key) || { left: rect.left, right: rect.right };
+                    line.left = Math.min(line.left, rect.left);
+                    line.right = Math.max(line.right, rect.right);
+                    lines.set(key, line);
+                }
+                for (const line of lines.values()) longest = Math.max(longest, (line.right - line.left) / scale);
+            }
+            const padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+            return Math.min(parseFloat(getComputedStyle(message).width), Math.ceil(longest + padding) + 1);
+        });
+        bubbles.forEach((message, index) => {
+            if (widths[index] > 0) message.style.width = widths[index] + 'px';
+        });
+    }
+
+    let fitFrame;
+    function scheduleMessageFit() {
+        cancelAnimationFrame(fitFrame);
+        fitFrame = requestAnimationFrame(fitMessageWidths);
+    }
+    window.addEventListener('resize', scheduleMessageFit);
+    document.fonts?.ready.then(scheduleMessageFit);
+
     function applyLanguage(nextLanguage) {
         language = hasTranslations && languages.includes(nextLanguage) ? nextLanguage : 'en';
         root.lang = language;
@@ -124,6 +173,7 @@
         }
         document.querySelectorAll('[data-language]').forEach(select => { select.value = language; });
         updateTime();
+        fitMessageWidths();
     }
 
     // 2. Theme controls share one state across every page.
