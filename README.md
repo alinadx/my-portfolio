@@ -1,4 +1,4 @@
-# Alina Didenko — Portfolio
+# My Portfolio
 
 A local portfolio for design and frontend work, built from my own Figma wireframes with plain HTML, CSS, and JavaScript. There is no framework, build step, runtime dependency, or public deployment.
 

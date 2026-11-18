@@ -33,13 +33,14 @@
                 <a class="projects-link" href="my-projects.html" ><span class="projects-link-title" data-i18n="projectsNavTitle">Projects</span><span class="projects-link-subtitle" data-i18n="projectsNavSubtitle">Design · Illustration &amp; Art · Development</span></a>
             </div>
             <span class="language-label" lang="en"><abbr title="English">EN</abbr></span>
-            <label class="language-control" hidden>
+            <div class="language-control" hidden>
                 <span class="visually-hidden" data-i18n="language">Choose language</span>
-                <select name="language" data-language aria-label="Choose language" data-i18n-aria-label="language">
-                    <option value="en" lang="en" aria-label="English">EN</option><option value="de" lang="de" aria-label="Deutsch">DE</option><option value="ru" lang="ru" aria-label="Русский">RU</option><option value="uk" lang="uk" aria-label="Українська">UK</option>
+                <button class="language-trigger" type="button" aria-label="Choose language" data-i18n-aria-label="language" aria-haspopup="menu" aria-expanded="false"><span class="language-current">EN</span><svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 8 9 9 9-9" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+                <div class="language-menu" role="menu" data-i18n-aria-label="language" aria-label="Choose language" hidden></div>
+                <select name="language" data-language hidden tabindex="-1" aria-hidden="true" aria-label="Choose language" data-i18n-aria-label="language">
+                    <option value="en" lang="en" aria-label="English">EN</option><option value="de" lang="de" aria-label="Deutsch">DE</option><option value="ru" lang="ru" aria-label="Русский">RU</option><option value="uk" lang="uk" aria-label="Українська">UA</option>
                 </select>
-                <svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 8 9 9 9-9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </label>
+            </div>
         </nav>
     </header>
 
@@ -50,8 +51,8 @@
             <p class="profile-role" data-i18n="role">Media Designer (Digital &amp; Print) Apprentice at imageLAND</p>
             <a class="profile-email" href="mailto:alinaxdidenko@gmail.com">alinaxdidenko@gmail.com</a>
             <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme" data-i18n-aria-label="theme" data-theme-toggle hidden><span class="theme-thumb">
-                <img class="icon sun-icon" src="Assets/sun-icon.svg">
-                <img class="icon moon-icon" src="Assets/moon-icon.svg"></span></button>
+                <img class="icon sun-icon" src="Assets/sun-icon.svg" alt="">
+                <img class="icon moon-icon" src="Assets/moon-icon.svg" alt=""></span></button>
         </section>
 
         <!-- Each question names a section. Replies stay readable without scripts. -->
@@ -138,7 +139,7 @@
                     <div class="message message--incoming">
                         <p data-i18n="moreProjects">And if you want to see a broader mix of my work, check out My Projects.</p>
                         <p data-i18n="illustrationWork">It also includes illustrations and some of my personal artwork.</p>
-                        <a class="pending-content project-case-link" href="my-projects.html" target="_blank" rel="noopener noreferrer">
+                        <a class="pending-content project-case-link" href="my-projects.html">
                             <span data-i18n="projects">Projects</span>
                         </a>
                     </div>
@@ -166,37 +167,40 @@
                                     </span>
                                         
                                     <div class="adobe-icons" aria-hidden="true">
-                                        <img class="brand-icon" src="Assets/photoshop-icon.svg" alt="photoshop icon" width="32" height="32">
-                                        <img class="brand-icon" src="Assets/lightroom-icon.svg" alt="lightroom icon" width="32" height="32">
-                                        <img class="brand-icon" src="Assets/indesign-icon.svg" alt="indesign icon" width="32" height="32">
-                                        <img class="brand-icon" src="Assets/illustrator-icon.svg" alt="illustrator icon" width="32" height="32">
+                                    <img class="brand-icon" src="Assets/photoshop-icon.svg" alt="" width="32" height="32">
+                                        <img class="brand-icon" src="Assets/lightroom-icon.svg" alt="" width="32" height="32">
+                                        <img class="brand-icon" src="Assets/indesign-icon.svg" alt="" width="32" height="32">
+                                        <img class="brand-icon" src="Assets/illustrator-icon.svg" alt="" width="32" height="32">
                                     </div>
                                 </dd>
                             </div>
                             <div class="tool">
                                 <dt>VS Code</dt>
                                 <dd>
-                                    <img class="brand-icon" src="Assets/vs-code-icon.svg" alt="vs-code icon" width="32" height="32">
+                                    <img class="brand-icon" src="Assets/vs-code-icon.svg" alt="" width="32" height="32">
                                         <p class="tool-description visually-hidden" data-i18n="editor">
                                             Code editor
                                         </p>
+                                </dd>
                             </div>
                             <div class="tool">
                                 <dt>Angular</dt>
                                 <dd>
-                                    <img class="brand-icon" src="Assets/angular-icon.svg" alt="angular icon" width="32" height="32">
+                                    <img class="brand-icon" src="Assets/angular-icon.svg" alt="" width="32" height="32">
                                     <p class="tool-description visually-hidden" data-i18n="frontendLearning">Frontend development — learning</p>
                                 </dd>
                             </div>
                             <div class="tool">
                                 <dt>Figma</dt>
                                 <dd>
-                                    <img class="brand-icon" src="Assets/figma-icon.svg" alt="figma icon" width="32" height="32">
-                                    <p class="tool-description visually-hidden" data-i18n="interfaceDesign">Interface design and prototyping</p></dd></div>
+                                    <img class="brand-icon" src="Assets/figma-icon.svg" alt="" width="32" height="32">
+                                    <p class="tool-description visually-hidden" data-i18n="interfaceDesign">Interface design and prototyping</p>
+                                </dd>
+                            </div>
                             <div class="tool">
                                 <dt>Framer</dt>
                                 <dd>
-                                    <img class="brand-icon" src="Assets/framer-icon.svg" alt="framer icon" width="32" height="32">
+                                    <img class="brand-icon" src="Assets/framer-icon.svg" alt="" width="32" height="32">
                                     <p class="tool-description visually-hidden" data-i18n="responsiveDesign">Responsive website design</p>
                                 </dd>
                             </div>
@@ -303,12 +307,12 @@
                     <div class="message message--incoming contact-card">
                         <ul class="contact-list">
                             <li>
-                                <a class="pending-content project-case-link" href="mailto:alinaxdidenko@gmail.com" 
+                                <a class="pending-content project-case-link" href="mailto:alinaxdidenko@gmail.com">
                                     <span data-i18n="email">Send me an email</span>
                                 </a>
                             </li>
-                            <li data-i18n="linkedinPending">LinkedIn profile link coming soon.ile link coming soon.</span></li>
-                            <li data-i18n="resumePending">Resume coming soon.Resume coming soon.</span></li>
+                            <li data-i18n="linkedinPending">LinkedIn profile link coming soon.</li>
+                            <li data-i18n="resumePending">Resume coming soon.</li>
                         </ul>
                     </div>
                     <div class="message message--incoming">
@@ -323,14 +327,14 @@
     <button class="show-all show-all--floating" type="button" data-show-all data-i18n="showAll" aria-controls="conversation" hidden>Show all messages</button>
 
     <footer class="site-footer">
-        <p>© <span data-current-year>2026</span></p>
+        <p>© 2026</p>
         <nav aria-label="Legal information" data-i18n-aria-label="legalNav">
             <a href="legal.html#legal-notice" data-i18n="legalNotice">Legal Notice</a>
             <a href="legal.html#privacy-policy" data-i18n="privacy">Privacy Policy</a>
         </nav>
         <ul class="social-links" aria-label="Social profiles" data-i18n-aria-label="socialNav">
-            <li><span class="pending-profile">Behance<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
-            <li><a href="https://github.com/alinadx">GitHub</a></li>
+            <li><a class="pending-profile" href="https://www.behance.net/alinaxdidenko" target="_blank" rel="noopener noreferrer">Behance</a></li>
+            <li><a class="pending-profile" href="https://github.com/alinadx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             <li><span class="pending-profile">LinkedIn<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
         </ul>
     </footer>

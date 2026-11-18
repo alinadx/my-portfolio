@@ -34,13 +34,14 @@
                 <a class="projects-link" href="index.html"><span class="projects-link-title" data-i18n="backHome">Back to home</span></a>
             </div>
             <span class="language-label" lang="en"><abbr title="English">EN</abbr></span>
-            <label class="language-control" hidden>
+            <div class="language-control" hidden>
                 <span class="visually-hidden" data-i18n="language">Choose language</span>
-                <select name="language" data-language aria-label="Choose language" data-i18n-aria-label="language">
-                    <option value="en" lang="en" aria-label="English">EN</option><option value="de" lang="de" aria-label="Deutsch">DE</option><option value="uk" lang="uk" aria-label="Українська">UK</option><option value="ru" lang="ru" aria-label="Русский">RU</option>
+                <button class="language-trigger" type="button" aria-label="Choose language" data-i18n-aria-label="language" aria-haspopup="menu" aria-expanded="false"><span class="language-current">EN</span><svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 8 9 9 9-9" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+                <div class="language-menu" role="menu" data-i18n-aria-label="language" aria-label="Choose language" hidden></div>
+                <select name="language" data-language hidden tabindex="-1" aria-hidden="true" aria-label="Choose language" data-i18n-aria-label="language">
+                    <option value="en" lang="en" aria-label="English">EN</option><option value="de" lang="de" aria-label="Deutsch">DE</option><option value="uk" lang="uk" aria-label="Українська">UA</option><option value="ru" lang="ru" aria-label="Русский">RU</option>
                 </select>
-                <svg class="icon chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 8 9 9 9-9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            </label>
+            </div>
         </nav>
     </header>
 
@@ -79,6 +80,7 @@
                         <a class="pending-content project-case-link" href="https://www.behance.net/gallery/181029675/Landing-Page-For-Dog-Walking-Company" target="_blank" rel="noopener noreferrer">
                             <span data-i18n="viewCase">View on Behance</span>
                         </a>
+                    </article>
                 </li>
             </ul>
         </section>
@@ -149,8 +151,8 @@
         <section class="project-category" aria-labelledby="code-title">
             <h2 id="code-title"><span class="category-number" aria-hidden="true">04</span> <span data-i18n="codeCategory">Code &amp; Development</span></h2>
             <article class="project-card code-card" aria-labelledby="portfolio-title"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.11 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.58 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
-                <h3 id="portfolio-title" data-i18n="portfolio">My Portfolio</h3>
-                <p data-i18n="portfolioDescription">A responsive portfolio built from my own Figma designs with semantic HTML, CSS, and JavaScript. Includes light/dark themes, four languages, and accessible motion.</p>
+                <h3 id="portfolio-title" data-i18n="portfolio">GitHub Projects</h3>
+                <p data-i18n="portfolioDescription">A collection of my coding projects, experiments, and learning exercises. You can explore the full source code and see what I’m currently building on GitHub.</p>
                 <p class="project-technologies">HTML · CSS · JavaScript · Angular</p>
                 <a class="pending-content project-case-link" href="https://github.com/alinadx" target="_blank" rel="noopener noreferrer">
                     <span data-i18n="viewGithub">View on GitHub</span>
@@ -159,21 +161,21 @@
         </section>
     </main>
 
-    <div class="page-theme" data-page-theme hidden><button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme" data-i18n-aria-label="theme" data-theme-toggle hidden><span class="theme-thumb"><svg class="icon sun-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></g></svg><svg class="icon moon-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 13A8.6 8.6 0 0 1 11 3.5 8.6 8.6 0 1 0 20.5 13Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span></button></div>
+    <div class="page-theme" data-page-theme hidden><button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme" data-i18n-aria-label="theme" data-theme-toggle hidden><span class="theme-thumb"><img class="icon sun-icon" src="Assets/sun-icon.svg" alt=""><img class="icon moon-icon" src="Assets/moon-icon.svg" alt=""></span></button></div>
 
     <footer class="site-footer">
-        <p>© <span data-current-year>2026</span></p>
+        <p>© 2026</p>
         <nav aria-label="Legal information" data-i18n-aria-label="legalNav">
             <a href="legal.html#legal-notice" data-i18n="legalNotice">Legal Notice</a>
             <a href="legal.html#privacy-policy" data-i18n="privacy">Privacy Policy</a>
         </nav>
         <ul class="social-links" aria-label="Social profiles" data-i18n-aria-label="socialNav">
-            <li><span class="pending-profile">Behance<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
-            <li><a href="https://github.com/alinadx">GitHub</a></li>
+            <li><a class="pending-profile" href="https://www.behance.net/alinaxdidenko" target="_blank" rel="noopener noreferrer">Behance</a></li>
+            <li><a class="pending-profile" href="https://github.com/alinadx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             <li><span class="pending-profile">LinkedIn<span class="visually-hidden"> — <span data-i18n="linkPending">Link coming soon</span></span></span></li>
         </ul>
     </footer>
-    <dialog class="artwork-dialog" aria-labelledby="artwork-preview-title">
+    <dialog class="artwork-dialog" aria-label="Artwork preview" data-i18n-aria-label="artworkPreviewTitle">
         <button class="artwork-dialog-close" type="button" aria-label="Close" data-i18n-aria-label="closeArtwork">×</button>
         <div class="artwork-dialog-content"></div>
     </dialog>

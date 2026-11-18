@@ -1,6 +1,22 @@
 document.querySelectorAll(".project-row").forEach((row) => {
     const cards = Array.from(row.children);
     let cardsFrame;
+    let hoveredCard;
+
+    row.addEventListener("pointerover", (event) => {
+        if (event.pointerType === "touch") return;
+        const card = event.target.closest("li");
+        if (!card || !row.contains(card) || card === hoveredCard) return;
+        hoveredCard?.classList.remove("is-pointer-hover");
+        hoveredCard = card;
+        hoveredCard.classList.add("is-pointer-hover");
+    });
+    row.addEventListener("pointerout", (event) => {
+        if (event.pointerType === "touch" || !hoveredCard) return;
+        if (event.relatedTarget && hoveredCard.contains(event.relatedTarget)) return;
+        hoveredCard.classList.remove("is-pointer-hover");
+        hoveredCard = undefined;
+    });
 
     const updateCards = () => {
         cardsFrame = undefined;

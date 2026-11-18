@@ -210,6 +210,94 @@
             save('portfolio-language', language);
         });
     });
+    const languageControls = [...document.querySelectorAll('.language-control')];
+    function closeLanguageMenus(except) {
+        languageControls.forEach(control => {
+            if (control === except) return;
+            const trigger = control.querySelector('.language-trigger');
+            const menu = control.querySelector('.language-menu');
+            if (!trigger || !menu) return;
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.hidden = true;
+        });
+    }
+    languageControls.forEach((control, index) => {
+        const select = control.querySelector('[data-language]');
+        const trigger = control.querySelector('.language-trigger');
+        const current = control.querySelector('.language-current');
+        const menu = control.querySelector('.language-menu');
+        if (!select || !trigger || !current || !menu) return;
+        if (!menu.id) menu.id = `language-options-${index + 1}`;
+        trigger.setAttribute('aria-controls', menu.id);
+        menu.replaceChildren(...[...select.options].map(option => {
+            const item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'language-option';
+            item.setAttribute('role', 'menuitemradio');
+            item.dataset.value = option.value;
+            item.textContent = option.getAttribute('aria-label') || option.textContent;
+            item.addEventListener('click', () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.focus();
+            });
+            return item;
+        }));
+        const syncCurrentLanguage = () => {
+            const selected = select.selectedOptions[0];
+            current.textContent = selected?.textContent || select.value.toUpperCase();
+            menu.querySelectorAll('[role="option"]').forEach(item => {
+                const isSelected = item.dataset.value === select.value;
+                item.setAttribute('aria-checked', String(isSelected));
+                item.tabIndex = isSelected ? 0 : -1;
+            });
+        };
+        syncCurrentLanguage();
+        select.addEventListener('change', syncCurrentLanguage);
+        trigger.addEventListener('click', () => {
+            const opening = menu.hidden;
+            closeLanguageMenus(control);
+            menu.hidden = !opening;
+            trigger.setAttribute('aria-expanded', String(opening));
+            if (opening) {
+                const rect = control.getBoundingClientRect();
+                menu.classList.toggle('is-left', rect.right + menu.offsetWidth + 10 > window.innerWidth - 8);
+            }
+        });
+        trigger.addEventListener('keydown', event => {
+            if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+            event.preventDefault();
+            if (menu.hidden) trigger.click();
+            menu.querySelector('[aria-checked="true"]')?.focus();
+        });
+        menu.addEventListener('keydown', event => {
+            const options = [...menu.querySelectorAll('[role="menuitemradio"]')];
+            const currentIndex = options.indexOf(document.activeElement);
+            let nextIndex;
+            if (event.key === 'ArrowDown') nextIndex = Math.min(options.length - 1, currentIndex + 1);
+            else if (event.key === 'ArrowUp') nextIndex = Math.max(0, currentIndex - 1);
+            else if (event.key === 'Home') nextIndex = 0;
+            else if (event.key === 'End') nextIndex = options.length - 1;
+            else if (event.key === 'Tab') {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                return;
+            }
+            else if (event.key === 'Escape') {
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.focus();
+                return;
+            } else return;
+            event.preventDefault();
+            options[nextIndex]?.focus();
+        });
+    });
+    document.addEventListener('pointerdown', event => {
+        if (!event.target.closest('.language-control')) closeLanguageMenus();
+    });
     window.addEventListener('storage', event => {
         if (event.key === 'portfolio-theme' || event.key === null) {
             manualTheme = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
