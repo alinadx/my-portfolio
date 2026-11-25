@@ -656,6 +656,10 @@ details[open] > summary::after { top: 12px; transform: rotate(225deg); }
 @keyframes artwork-fade-out { from { opacity: 1; } to { opacity: 0; } }
 .artwork-dialog-content { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 48px; min-height: calc(100dvh - 66px); }
 .artwork-dialog-image-wrap { position: relative; width: fit-content; max-width: 100%; cursor: zoom-in; touch-action: none; }
+.artwork-dialog-image-wrap.is-loading { cursor: progress; }
+.artwork-dialog-image-wrap.is-loading::after { content: ""; position: absolute; right: 20px; bottom: 20px; width: 22px; height: 22px; border: 2px solid rgb(255 255 255 / .35); border-top-color: #fff; border-radius: 50%; background: rgb(0 0 0 / .15); animation: artwork-loading .8s linear infinite; pointer-events: none; }
+@keyframes artwork-loading { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .artwork-dialog-image-wrap.is-loading::after { animation: none; } }
 .artwork-dialog-image {
     display: block; width: auto; height: auto;
     max-width: min(76vw, 860px); max-height: min(72dvh, 900px);
