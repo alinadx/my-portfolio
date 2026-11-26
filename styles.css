@@ -614,16 +614,16 @@ details[open] > summary::after { top: 12px; transform: rotate(225deg); }
     height: auto;
     max-width: 100%;
     max-height: 244px;
-    border: 6px ridge #b8894d;
+    border: 12px ridge #b8894d;
     border-radius: 0;
     box-shadow:
-        0 0 0 1px #4c3019,
-        0 0 0 3px #bd9155,
-        0 0 0 4px #795128,
-        0 0 0 6px #56361e,
-        0 0 0 8px #976a39,
-        0 -1px 0 9px #d4a763,
-        0 1px 0 10px #53371f,
+        0 0 0 2px #4c3019,
+        0 0 0 6px #bd9155,
+        0 0 0 8px #795128,
+        0 0 0 12px #56361e,
+        0 0 0 16px #976a39,
+        0 -2px 0 18px #d4a763,
+        0 2px 0 20px #53371f,
         var(--painting-shadow);
 }
 .artwork-display { --painting-shadow: 0 14px 14px 6px rgb(38 39 47 / .32); }
