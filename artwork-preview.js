@@ -68,11 +68,72 @@ document.querySelectorAll(".artwork-open").forEach((button) => {
             artwork = imageWrap;
             let original = null;
             let lastPointer = null;
+            let resetTouchZoom = () => {};
+            const touchZoom = navigator.maxTouchPoints > 0;
+            if (touchZoom) {
+                imageWrap.classList.add("has-touch-zoom");
+                const pointers = new Map();
+                let scale = 1, offsetX = 0, offsetY = 0;
+                let gesture = null;
+                resetTouchZoom = () => {
+                    scale = 1;
+                    offsetX = offsetY = 0;
+                    pointers.clear();
+                    gesture = null;
+                    preview.style.transform = "";
+                    imageWrap.classList.remove("has-touch-zoom");
+                };
+                const measure = () => {
+                    const points = [...pointers.values()];
+                    const a = points[0], b = points[1] || a;
+                    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2,
+                        distance: Math.hypot(a.x - b.x, a.y - b.y) };
+                };
+                const startGesture = () => {
+                    gesture = pointers.size ? { ...measure(), scale, offsetX, offsetY } : null;
+                };
+                imageWrap.addEventListener("pointerdown", (event) => {
+                    if (event.pointerType === "mouse") return;
+                    imageWrap.classList.add("has-touch-zoom");
+                    lens.hidden = true;
+                    lastPointer = null;
+                    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+                    imageWrap.setPointerCapture(event.pointerId);
+                    startGesture();
+                });
+                imageWrap.addEventListener("pointermove", (event) => {
+                    if (!pointers.has(event.pointerId) || !gesture) return;
+                    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+                    const current = measure();
+                    const bounds = imageWrap.getBoundingClientRect();
+                    const limit = original ? Math.max(1, Math.min(4,
+                        original.naturalWidth / preview.clientWidth,
+                        original.naturalHeight / preview.clientHeight)) : 1;
+                    scale = Math.min(limit, Math.max(1, gesture.distance > 0
+                        ? gesture.scale * current.distance / gesture.distance : gesture.scale));
+                    const ratio = scale / gesture.scale;
+                    offsetX = current.x - bounds.left - (gesture.x - bounds.left - gesture.offsetX) * ratio;
+                    offsetY = current.y - bounds.top - (gesture.y - bounds.top - gesture.offsetY) * ratio;
+                    offsetX = Math.min(0, Math.max(bounds.width * (1 - scale), offsetX));
+                    offsetY = Math.min(0, Math.max(bounds.height * (1 - scale), offsetY));
+                    preview.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+                });
+                const release = (event) => {
+                    pointers.delete(event.pointerId);
+                    startGesture();
+                };
+                imageWrap.addEventListener("pointerup", release);
+                imageWrap.addEventListener("pointercancel", release);
+                imageWrap.addEventListener("lostpointercapture", release);
+            }
             imageWrap.setAttribute("aria-busy", "true");
             imageWrap.classList.add("is-loading");
 
             const moveLens = (event) => {
-                lastPointer = { clientX: event.clientX, clientY: event.clientY };
+                // Browsers report both a trackpad and a mouse as a mouse pointer.
+                if (event.pointerType !== "mouse") return;
+                if (touchZoom) resetTouchZoom();
+                lastPointer = { clientX: event.clientX, clientY: event.clientY, pointerType: "mouse" };
                 if (!original) return;
                 const bounds = preview.getBoundingClientRect();
                 if (!bounds.width || !bounds.height) return;
