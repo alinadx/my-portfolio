@@ -668,6 +668,10 @@ details[open] > summary::after { top: 12px; transform: rotate(225deg); }
     max-width: min(76vw, 860px); max-height: min(72dvh, 900px);
     object-fit: contain;
     border: 12px ridge #b8894d;
+    box-shadow: none;
+}
+/* Keep the outer frame outside the clipping area used for touch zoom. */
+.artwork-dialog-image-wrap {
     box-shadow:
         0 0 0 2px #4c3019,
         0 0 0 6px #bd9155,
